@@ -183,11 +183,29 @@ public class Menu {
                 for (i = 0; i < jugadores; i++) {
                     System.out.println("\nIngrese el simbolo del jugador " + (i + 1));
                     caracterUsuario = "" + entrada.next();
-                    while (caracterUsuario.length() != 1) {
+                    /* while (caracterUsuario.length() != 1) {
                         System.out.println("\nDEBE INGRESAR SOLO UN CARACTER O EL CARACTER ES INVALIDO");
                         System.out.println("INTENTE NUEVAMENTE");
                         caracterUsuario = "" + entrada.next();
+                    }*/
+
+                    int c = 0;
+                    while (c < i) {
+                        while (caracterUsuario.length() != 1) {
+                            System.out.println("\nDEBE INGRESAR SOLO UN CARACTER O EL CARACTER ES INVALIDO");
+                            System.out.println("INTENTE NUEVAMENTE");
+                            caracterUsuario = "" + entrada.next();
+                        }
+
+                        if (caracterUsuario.equalsIgnoreCase(this.usuario[c].getCaracterUsuario())) {
+                            System.out.println("\nEL CARACTER YA EXISTE! INGRESE OTRO!");
+                            caracterUsuario = entrada.next();
+                            c = 0;
+                        } else {
+                            c++;
+                        }
                     }
+
                     usuario[i] = new Usuario(caracterUsuario);
                 }
 
