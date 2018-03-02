@@ -108,11 +108,11 @@ public class Tablero {
         for(i = 0; i < this.filas ; i++){
             for(j=0; j<this.columnas;j++){
                 if(contador<10){
-                    matriz[i][j]="[       "+contador+"]";
+                    matriz[i][j]="[         "+contador+"]";
                 }else if(contador>=10&&contador<100){
-                    matriz[i][j]="[      "+contador+"]";
+                    matriz[i][j]="[        "+contador+"]";
                 }else{
-                    matriz[i][j]="[     "+contador+"]";
+                    matriz[i][j]="[       "+contador+"]";
                 }
                 
                 if(j==this.columnas-1){

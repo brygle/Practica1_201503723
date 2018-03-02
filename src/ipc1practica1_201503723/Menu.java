@@ -59,20 +59,27 @@ public class Menu {
             tablero.setMatriz(0, 0, textoNuevo);
             turno++;
         }
+        AsignarSubida();
         tablero.imprimirMatriz();
         turno = 0;
         while (true) {
             System.out.println("\nTURNO DEL JUGADOR " + (turno + 1) + " " + usuario[turno].getCaracterUsuario());
             entrada.nextLine();
+            System.out.println("Lanzara los dados! Presione cualquier tecla para continuar");
+            entrada.nextLine();
             random = usuario[turno].getRandom(dificultad);
             System.out.println("Avanzara " + random + " casillas ");
             entrada.nextLine();
+            //obtengo la celda
             texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+            //limpio la matriz
             textoNuevo = texto.substring(0, turno + 1) + " " + texto.substring((turno + 2), (texto.length()));
+            //seteo la celda nueva
             tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
             usuario[turno].setFilaColumna(random, dificultad);
             fila = usuario[turno].getFila();
             columna = usuario[turno].getColumna();
+            //validacion si el juego termino
             if (dificultad == 1 && fila > 4) {
                 texto = tablero.getMatriz(4, 7);
                 textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
@@ -90,10 +97,91 @@ public class Menu {
                 entrada.nextLine();
                 MenuPrincipal();
             }
+            //obtengo la nueva celda
             texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+            //texto de la nueva casilla
             textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+            //seteo el texto nuevo
             tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
             tablero.imprimirMatriz();
+            //verifico lo que hay en la celda
+            fila = usuario[turno].getFila();
+            columna = usuario[turno].getColumna();
+
+            while (tablero.getMatriz(fila, columna).substring(6, 7).equalsIgnoreCase("+")
+                    || tablero.getMatriz(fila, columna).substring(6, 7).equalsIgnoreCase("-")) {
+                if (tablero.getMatriz(fila, columna).substring(6, 7).equalsIgnoreCase("+")) {
+                    System.out.println("HA CAIDO EN UNA CASILLA ESPECIAL");
+                    random = usuario[turno].getRandom(dificultad);
+                    System.out.println("Avanzara " + random + " casillas ");
+                    entrada.nextLine();
+                    texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+                    textoNuevo = texto.substring(0, turno + 1) + " " + texto.substring((turno + 2), (texto.length()));
+                    tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
+                    usuario[turno].setFilaColumna(random, dificultad);
+                    fila = usuario[turno].getFila();
+                    columna = usuario[turno].getColumna();
+                    if (dificultad == 1 && fila > 4) {
+                        texto = tablero.getMatriz(4, 7);
+                        textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                        tablero.setMatriz(4, 7, textoNuevo);
+                        tablero.imprimirMatriz();
+                        System.out.println("\nFELICITACIONES!!! EL GANADOR DEL JUEGO HA SIDO EL JUGADOR " + (turno + 1));
+                        entrada.nextLine();
+                        MenuPrincipal();
+                    } else if (dificultad == 2 && fila > 19) {
+                        texto = tablero.getMatriz(19, 0);
+                        textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                        tablero.setMatriz(19, 0, textoNuevo);
+                        tablero.imprimirMatriz();
+                        System.out.println("\nFELICITACIONES!!! EL GANADOR DEL JUEGO HA SIDO EL JUGADOR " + (turno + 1));
+                        entrada.nextLine();
+                        MenuPrincipal();
+                    }
+                    //obtengo la nueva celda
+                    texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+                    //texto de la nueva casilla
+                    textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                    //seteo el texto nuevo
+                    tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
+                    tablero.imprimirMatriz();
+                } else if (tablero.getMatriz(fila, columna).substring(6, 7).equalsIgnoreCase("-")) {
+                    System.out.println("HA CAIDO EN UNA CASILLA ESPECIAL");
+                    random = usuario[turno].getRandom(dificultad);
+                    System.out.println("Regresara " + random + " casillas ");
+                    entrada.nextLine();
+                    texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+                    textoNuevo = texto.substring(0, turno + 1) + " " + texto.substring((turno + 2), (texto.length()));
+                    tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
+                    usuario[turno].setFilaColumnaNegativo(random, dificultad);
+                    fila = usuario[turno].getFila();
+                    columna = usuario[turno].getColumna();
+                    if (dificultad == 1 && fila > 4) {
+                        texto = tablero.getMatriz(4, 7);
+                        textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                        tablero.setMatriz(4, 7, textoNuevo);
+                        tablero.imprimirMatriz();
+                        System.out.println("\nFELICITACIONES!!! EL GANADOR DEL JUEGO HA SIDO EL JUGADOR " + (turno + 1));
+                        entrada.nextLine();
+                        MenuPrincipal();
+                    } else if (dificultad == 2 && fila > 19) {
+                        texto = tablero.getMatriz(19, 0);
+                        textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                        tablero.setMatriz(19, 0, textoNuevo);
+                        tablero.imprimirMatriz();
+                        System.out.println("\nFELICITACIONES!!! EL GANADOR DEL JUEGO HA SIDO EL JUGADOR " + (turno + 1));
+                        entrada.nextLine();
+                        MenuPrincipal();
+                    }
+                    //obtengo la nueva celda
+                    texto = tablero.getMatriz(usuario[turno].getFila(), usuario[turno].getColumna());
+                    //texto de la nueva casilla
+                    textoNuevo = texto.substring(0, turno + 1) + usuario[turno].getCaracterUsuario() + texto.substring((turno + 2), (texto.length()));
+                    //seteo el texto nuevo
+                    tablero.setMatriz(usuario[turno].getFila(), usuario[turno].getColumna(), textoNuevo);
+                    tablero.imprimirMatriz();
+                }
+            }
             turno++;
             if (turno == jugadores) {
                 turno = 0;
@@ -128,6 +216,8 @@ public class Menu {
                 bajadasMin = 5;
                 bajadasMax = 10;
                 random = 6;
+                filas = 5;
+                columnas = 8;
                 MenuPrincipal();
                 break;
             case "2":
@@ -142,6 +232,8 @@ public class Menu {
                 bajadasMax = 40;
                 jugadoresMax = 4;
                 random = 12;
+                filas = 20;
+                columnas = 10;
                 MenuPrincipal();
                 break;
             case "3":
@@ -183,12 +275,6 @@ public class Menu {
                 for (i = 0; i < jugadores; i++) {
                     System.out.println("\nIngrese el simbolo del jugador " + (i + 1));
                     caracterUsuario = "" + entrada.next();
-                    /* while (caracterUsuario.length() != 1) {
-                        System.out.println("\nDEBE INGRESAR SOLO UN CARACTER O EL CARACTER ES INVALIDO");
-                        System.out.println("INTENTE NUEVAMENTE");
-                        caracterUsuario = "" + entrada.next();
-                    }*/
-
                     int c = 0;
                     while (c < i) {
                         while (caracterUsuario.length() != 1) {
@@ -226,6 +312,8 @@ public class Menu {
                     System.out.println("Vuelva a ingresar la cantidad de bajadas");
                     bajadas = entrada.nextInt();
                 }
+
+                subidaBajon = new SubidaBajon[subidas + bajadas];
                 MenuParametrosIniciales();
                 break;
             case "3":
@@ -236,4 +324,89 @@ public class Menu {
                 MenuParametrosIniciales();
         }
     }
+    int filas;
+    int columnas;
+
+    public void AsignarSubida() {
+        boolean bandera = false;
+        int contador = 0;
+        int x, y;
+        String texto, textoNuevo;
+        for (int i = 0; i < (subidas + bajadas); i++) {
+            do {
+                x = (int) ((Math.random() * (filas)));
+                y = (int) (Math.random() * (columnas));
+                subidaBajon[i] = new SubidaBajon();
+                subidaBajon[i].setX(x);
+                subidaBajon[i].setY(y);
+                contador = 0;
+                while (contador < i) {
+                    if (subidaBajon[i].getX() == 0
+                            && subidaBajon[i].getY() == 0) {
+                        bandera = true;
+                    } else if ((dificultad == 1)
+                            && (subidaBajon[i].getX() == filas - 1)
+                            && (subidaBajon[i].getY() == columnas - 1)) {
+                        bandera = true;
+                    } else if ((dificultad == 2)
+                            && (subidaBajon[i].getX() == filas - 1)
+                            && (subidaBajon[i].getY() == 0)) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() == subidaBajon[contador].getY())) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() > 0)
+                            && (subidaBajon[i].getY() < columnas - 1)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() - 1))) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() > 0)
+                            && (subidaBajon[i].getY() < columnas - 1)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() + 1))) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() == 0)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() + 1))) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() == columnas - 1)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() - 1))) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() == 0)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() - 1))) {
+                        bandera = true;
+                    } else if ((subidaBajon[i].getX() == subidaBajon[contador].getX())
+                            && (subidaBajon[i].getY() == columnas - 1)
+                            && (subidaBajon[i].getY() == (subidaBajon[contador].getY() + 1))) {
+                        bandera = true;
+                    } else {
+                        bandera = false;
+                    }
+
+                    if (bandera == true) {
+                        contador = 300;
+                    } else {
+                        contador++;
+                    }
+                }
+
+            } while (bandera == true);
+
+        }
+        int k;
+        for (k = 0; k < (subidas + bajadas); k++) {
+            if (k < subidas) {
+                texto = tablero.getMatriz(subidaBajon[k].getX(), subidaBajon[k].getY());
+                textoNuevo = texto.substring(0, 6) + "+" + texto.substring(7, texto.length());
+                tablero.setMatriz(subidaBajon[k].getX(), subidaBajon[k].getY(), textoNuevo);
+            } else {
+                texto = tablero.getMatriz(subidaBajon[k].getX(), subidaBajon[k].getY());
+                textoNuevo = texto.substring(0, 6) + "-" + texto.substring(7, texto.length());
+                tablero.setMatriz(subidaBajon[k].getX(), subidaBajon[k].getY(), textoNuevo);
+            }
+        }
+    }
+    SubidaBajon[] subidaBajon = null;
 }
